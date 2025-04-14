@@ -1,0 +1,1304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FullStory E-Commerce</title>
+    <!-- Added Google Fonts for Inter -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+    <style>
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+            color: #333;
+            transition: background-color 0.3s ease;
+            line-height: 1.5;
+            font-weight: 400;
+        }
+        h1, h2, h3 {
+            color: #333;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+        }
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+        h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+        h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.8rem;
+        }
+        select {
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 16px;
+            font-family: 'Inter', sans-serif;
+            border-radius: 6px;
+            border: 1px solid #ddd;
+            background-color: white;
+        }
+        .section {
+            margin-bottom: 30px;
+            padding: 24px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+        }
+        .metrics, .terminology, .benefits {
+            display: none;
+        }
+        .metrics table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.95rem;
+        }
+        .metrics th, .metrics td {
+            border: 1px solid #eaeaea;
+            padding: 12px;
+            text-align: left;
+        }
+        .metrics th {
+            background-color: #f7f7f7;
+            font-weight: 600;
+        }
+        ul {
+            padding-left: 1.2rem;
+        }
+        li {
+            margin-bottom: 8px;
+            position: relative; /* For icon positioning */
+        }
+
+        /* Industry-specific background colors - adjusted for better aesthetics */
+        .retail-background { background-color: #D5A6BD; }
+        .consumer-goods-background { background-color: #D9A77B; }
+        .services-background { background-color: #9BBF9F; }
+        .food-and-beverage-background { background-color: #E1B866; }
+        .fashion-background { background-color: #ECEAF6; }
+        .diy-hardware-background { background-color: #7C8C97; }
+        .electronics-background { background-color: #8AAEC0; }
+        .media-background { background-color: #D28282; }
+        .beauty-and-health-background { background-color: #A08BA5; }
+        .e-learning-background { background-color: #7DB9B6; }
+        
+        /* Persona highlight styles - modernized */
+        .highlight-product {
+            background-color: rgba(255, 235, 59, 0.3);
+            padding: 2px 6px;
+            border-radius: 4px;
+            position: relative; /* For icon positioning */
+        }
+        .highlight-engineering {
+            background-color: rgba(76, 175, 80, 0.2);
+            padding: 2px 6px;
+            border-radius: 4px;
+            color: #1b5e20;
+            position: relative; /* For icon positioning */
+        }
+        .highlight-sales {
+            background-color: rgba(33, 150, 243, 0.2);
+            padding: 2px 6px;
+            border-radius: 4px;
+            color: #0d47a1;
+            position: relative; /* For icon positioning */
+        }
+        .highlight-marketing {
+            background-color: rgba(255, 152, 0, 0.2);
+            padding: 2px 6px;
+            border-radius: 4px;
+            color: #e65100;
+            position: relative; /* For icon positioning */
+        }
+        .highlight-support {
+            background-color: rgba(156, 39, 176, 0.2);
+            padding: 2px 6px;
+            border-radius: 4px;
+            color: #4a148c;
+            position: relative; /* For icon positioning */
+        }
+        .highlight-success {
+            background-color: rgba(0, 188, 212, 0.2);
+            padding: 2px 6px;
+            border-radius: 4px;
+            color: #006064;
+            position: relative; /* For icon positioning */
+        }
+        .highlight-executive {
+            background-color: rgba(244, 67, 54, 0.2);
+            padding: 2px 6px;
+            border-radius: 4px;
+            color: #b71c1c;
+            position: relative; /* For icon positioning */
+        }
+        
+        .dropdowns {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .dropdown-container {
+            flex: 1;
+            min-width: 250px;
+        }
+        
+        /* Debug panel for highlighting coverage */
+        #debugPanel {
+            display: none;
+            padding: 10px;
+            margin-top: 20px;
+            background-color: #f8f9fa;
+            border: 1px solid #ddd;
+        }
+
+        .info-icon {
+            display: inline-block;
+            font-size: 0.75rem;
+            background: rgba(255, 255, 255, 0.85);
+            border: 1px solid #ccc;
+            border-radius: 50%;
+            width: 16px;
+            height: 16px;
+            line-height: 16px;
+            text-align: center;
+            margin-left: 6px;
+            cursor: pointer;
+            position: relative;
+            top: -1px;
+            font-weight: bold;
+            color: #555;
+            vertical-align: middle;
+        }
+        
+        .tooltip {
+            display: none;
+            position: absolute;
+            background: #333;
+            color: #fff;
+            padding: 10px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            max-width: 300px;
+            z-index: 999;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            line-height: 1.4;
+        }
+        
+        /* Logo styles */
+        .logo-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .logo {
+            font-weight: 700;
+            font-size: 1.8rem;
+            margin-right: 8px;
+            color: #ff6633;
+        }
+        
+        .logo-subtitle {
+            font-size: 1rem;
+            font-weight: 400;
+            color: #666;
+        }
+        
+        /* Added styles for better info presentation */
+        .highlight-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        /* Add this to your existing style section */
+        .terminology ul {
+            padding-left: 1.5rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 12px 24px;
+        }
+
+        .terminology li {
+            margin-bottom: 12px;
+            padding: 8px 12px;
+            background-color: rgba(255, 255, 255, 0.7);
+            border-radius: 6px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .terminology li:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+        }
+
+        /* Better info icon styling */
+        .info-icon {
+            display: inline-block;
+            font-size: 0.7rem;
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(0,0,0,0.1);
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            line-height: 18px;
+            text-align: center;
+            margin-left: 8px;
+            cursor: pointer;
+            position: relative;
+            top: -1px;
+            font-weight: bold;
+            color: #666;
+            vertical-align: middle;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+            transition: background-color 0.2s, transform 0.2s;
+        }
+
+        .info-icon:hover {
+            background-color: #f0f0f0;
+            transform: scale(1.1);
+        }
+
+        /* Improve tooltip styling */
+        .tooltip {
+            display: none;
+            position: absolute;
+            background: #333;
+            color: #fff;
+            padding: 12px 16px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            max-width: 320px;
+            z-index: 999;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            line-height: 1.5;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .tooltip.visible {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="logo-container">
+        <div class="logo">FullStory</div>
+        <div class="logo-subtitle">E-Commerce Industry Breakdown</div>
+    </div>
+
+    <div class="section">
+        <div class="dropdowns">
+            <div class="dropdown-container">
+                <h3>Industries</h3>
+                <select id="industrySelect" onchange="filterContent()">
+                    <option value="">--Choose an Industry--</option>
+                    <option value="Retail">Retail</option>
+                    <option value="Consumer Goods">Consumer Goods</option>
+                    <option value="Services">Services</option>
+                    <option value="Food and Beverage">Food and Beverage</option>
+                    <option value="Fashion">Fashion</option>
+                    <option value="DIY and Hardware">DIY and Hardware</option>
+                    <option value="Electronics">Electronics</option>
+                    <option value="Media">Media</option>
+                    <option value="Beauty and Health">Beauty and Health</option>
+                    <option value="E-Learning">E-Learning</option>
+                </select>
+            </div>
+            <div class="dropdown-container">
+                <h3>User Personas</h3>
+                <select id="personaSelect" onchange="applyPersonaHighlights()">
+                    <option value="">--Choose a Persona--</option>
+                    <option value="product">Product Manager</option>
+                    <option value="engineering">Engineering</option>
+                    <option value="sales">Sales</option>
+                    <option value="marketing">Marketing</option>
+                    <option value="support">Support</option>
+                    <option value="success">Customer Success</option>
+                    <option value="executive">C-Level Executive</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="section terminology" id="terminologySection">
+        <h2>Industry Terminology</h2>
+        <ul id="terminologyList"></ul>
+    </div>
+
+    <div class="section metrics" id="metricsSection">
+        <h2>Top 3 Metrics and KPIs</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Metric/KPI</th>
+                    <th>Formula</th>
+                </tr>
+            </thead>
+            <tbody id="metricsTable"></tbody>
+        </table>
+    </div>
+
+    <div class="section benefits" id="benefitsSection">
+        <h2>Why E-commerce Customers Love FullStory</h2>
+        <ul id="benefitsList"></ul>
+    </div>
+    
+    <!-- Tooltip container that will be reused -->
+    <div id="globalTooltip" class="tooltip"></div>
+
+    <script>
+        // Enhanced persona reasons with more detailed explanations for each persona type
+        const personaReasons = {
+            // Product Managers
+            "User Friction": "Product managers use FullStory to identify friction points in the user experience that might be causing drop-offs or abandoned carts.",
+            "Customer Journey": "Product managers rely on session replay to visualize and optimize the entire customer journey from landing to checkout.",
+            "Product Discovery": "Product managers need to understand how users find and interact with products to optimize catalog organization and recommendations.",
+            "Mobile Optimization": "Product managers use FullStory to identify mobile-specific usability issues and improve responsive designs.",
+            "Personalization": "Product managers can analyze user behavior to create more personalized product experiences and recommendations.",
+            "Checkout Optimization": "Product managers work with engineering to use FullStory data for reducing friction in checkout processes.",
+            "Cart Abandonment": "Product owners analyze abandonment patterns to identify and fix UX issues causing users to leave before purchasing.",
+            
+            // Engineering
+            "Technical Performance": "Engineering teams use FullStory to identify client-side performance issues affecting conversion rates.",
+            "Mobile Optimization": "Engineers use FullStory to debug mobile-specific issues and validate responsive design implementations.",
+            "Process Optimization": "Engineering teams identify bottlenecks and technical friction points using session replay and error tracking.",
+            "Online Ordering Experience": "Engineers use FullStory to debug ordering flows and identify JavaScript errors affecting checkouts.",
+            "Shopping Cart": "Engineers use FullStory's error tracking to identify and fix bugs in cart functionality that may cause revenue loss.",
+            "Order Accuracy": "Engineering teams validate that order processing systems are capturing customer selections correctly.",
+            "Bounce Rate": "Engineers can identify technical issues like slow page loads that contribute to high bounce rates.",
+            
+            // Sales
+            "Revenue Per Visitor": "Sales teams use FullStory data to show prospects how to increase RPV by optimizing customer experiences.",
+            "Conversion Funnel": "Sales teams demonstrate how FullStory helps identify conversion blockers to increase sales.",
+            "Average Order Value": "Sales teams position FullStory as a tool to identify opportunities for upselling and cross-selling.",
+            "Cross-Selling Opportunities": "Sales teams show how FullStory insights can help identify product pairings that increase basket size.",
+            "Market Share Growth": "Sales teams position FullStory as a competitive advantage that helps clients outperform competitors.",
+            "Customer Lifetime Value": "Sales teams demonstrate how better experiences lead to repeat purchases and higher lifetime value.",
+            "Brand Loyalty": "Sales teams show how smooth digital experiences create stronger brand loyalty and repeat business.",
+            
+            // Marketing
+            "Bounce Rate": "Marketing teams use FullStory to understand why users bounce from landing pages and optimize campaign effectiveness.",
+            "Content Personalization": "Marketing uses FullStory to analyze how different user segments interact with content.",
+            "Audience Engagement": "Marketing teams optimize content based on actual user engagement patterns observed in FullStory.",
+            "Customer Segmentation": "Marketing creates more effective segments based on observed behavior in FullStory sessions.",
+            "Social Sharing": "Marketing teams analyze what content drives social sharing to amplify organic reach.",
+            "Click-Through Rate": "Marketing teams identify design elements that drive higher CTRs based on session replays.",
+            "Conversion Rate": "Marketing teams optimize conversion rates by analyzing where users get stuck or confused.",
+            
+            // Support
+            "Customer Feedback": "Support teams use FullStory to see exactly what customers experienced when reporting issues.",
+            "Ticket Resolution": "Support teams resolve tickets faster by watching the exact session where a problem occurred.",
+            "First-Time Resolution": "Support teams increase first-contact resolution by seeing exactly what happened to customers.",
+            "Customer Effort Score": "Support teams identify and fix points of high customer effort to improve satisfaction.",
+            "User Friction": "Support identifies common friction points to create better self-service content.",
+            "Customer Satisfaction Score": "Support teams use FullStory to understand and address issues affecting CSAT scores.",
+            "Order Accuracy": "Support teams can verify what customers actually selected when disputes arise.",
+            
+            // Customer Success
+            "Customer Retention": "Success teams use FullStory to identify at-risk customers based on frustration signals.",
+            "Customer Lifetime Value": "Success teams increase CLV by ensuring smooth experiences that encourage repeat business.",
+            "Repeat Purchases": "Success teams identify obstacles preventing customers from making repeat purchases.",
+            "Customer Onboarding": "Success teams optimize onboarding flows by seeing where new customers get stuck.",
+            "Customer Loyalty": "Success teams build stronger loyalty by proactively addressing issues before customers complain.",
+            "Customer Satisfaction Score": "Success teams track satisfaction by monitoring rage clicks and frustration signals.",
+            "Return Visits": "Success teams analyze what drives customers to return and what might prevent them from coming back.",
+            
+            // Executives
+            "Conversion Rate": "Executives monitor conversion rates as a key indicator of digital experience quality and business health.",
+            "Customer Lifetime Value": "Executives use FullStory insights to drive strategic decisions that increase customer value.",
+            "Market Share Growth": "Executives leverage digital experience data for competitive advantage and market share gains.",
+            "Revenue Per Visitor": "Executives track RPV as a key metric for evaluating digital experience improvements.",
+            "Customer Retention Rate": "Executives monitor retention as a critical indicator of business sustainability and growth.",
+            "Average Order Value": "Executives focus on AOV as a key driver of revenue growth and business performance.",
+            "Net Promoter Score": "Executives track NPS as an indicator of customer loyalty and long-term business health.",
+            
+            // General metrics that multiple personas care about
+            "Conversion Rate": "This key revenue metric helps quantify the direct impact of user experience improvements on the bottom line.",
+            "Customer Journey": "Understanding the complete path users take helps identify optimization opportunities across touchpoints.",
+            "Customer Retention Rate": "Analyzing user behavior patterns helps identify what keeps customers coming back.",
+            "Checkout Optimization": "Session replay reveals exactly where users struggle during checkout, directly impacting revenue.",
+            "Audience Engagement": "Behavioral data shows which content and features actually engage users versus what gets ignored.",
+            
+            // Benefits-specific reasons
+            "Identify barriers in the customer journey": "FullStory's session replay and funnel visualization tools pinpoint exact moments where users struggle.",
+            "Enhance checkout flow": "FullStory's frustration signals identify specific form fields and steps causing cart abandonment.",
+            "Increase average order value": "FullStory helps identify opportunities for effective upselling and cross-selling based on user behavior.",
+            "Enhance customer loyalty programs": "FullStory data helps segment customers based on actual behavior for more effective loyalty initiatives.",
+            "Identify high-value customers": "Behavioral patterns revealed in FullStory help identify characteristics of your most valuable customers.",
+            "Optimize product recommendations": "FullStory helps understand which recommendations drive engagement and which are ignored.",
+            "Enhance client satisfaction": "FullStory allows support teams to see exactly what clients experienced when issues arose.",
+            "Improve service workflows": "Session replay identifies inefficiencies in service delivery processes from the customer's perspective.",
+            "Optimize employee performance": "FullStory insights help create better training by showing where employees and customers struggle.",
+            "Boost repeat customer visits": "FullStory helps identify what experiences encourage or discourage customers from returning.",
+            "Optimize online ordering experience": "FullStory's funnel analysis pinpoints exactly where the ordering process creates friction.",
+            "Increase order value per customer": "FullStory helps identify missed opportunities for complementary product recommendations.",
+            "Personalize shopping experiences": "FullStory helps understand different customer segments' behaviors to tailor their experiences.",
+            "Increase shopping cart conversion": "FullStory identifies the exact moments users abandon carts and why.",
+            "Increase sales through targeted promotions": "FullStory helps identify which user segments respond to which promotional approaches.",
+            "Optimize product availability": "FullStory helps understand how stockouts and inventory displays affect customer behavior.",
+            "Enhance customer satisfaction": "FullStory's session replay helps understand the emotional journey customers experience.",
+            "Reduce product return rates": "FullStory helps identify unclear product information that leads to returns.",
+            "Enhance purchase intent": "FullStory helps optimize the path from browsing to purchase by removing friction.",
+            "Improve tech upgrade recommendations": "FullStory helps identify when and how to present upgrade options based on user behavior.",
+            "Boost audience engagement": "FullStory shows which content formats and topics drive the deepest engagement.",
+            "Enhance content personalization": "FullStory helps identify which content resonates with different user segments.",
+            "Increase video completion rates": "FullStory helps identify at what points users abandon videos and why.",
+            "Increase repeat purchases": "FullStory helps create smoother post-purchase experiences that encourage customers to return.",
+            "Improve customer satisfaction": "FullStory helps identify and fix pain points that frustrate customers before they complain.",
+            "Improve student engagement": "FullStory helps identify which learning approaches keep students most engaged.",
+            "Increase course completion rates": "FullStory helps identify where students struggle or lose interest and drop courses.",
+            "Optimize learning paths": "FullStory helps understand how different students navigate through educational content."
+        };
+
+        const industryData = {
+            "Retail": {
+                terminology: [
+                    "Cart Abandonment",
+                    "Conversion Funnel",
+                    "Checkout Optimization",
+                    "Personalization",
+                    "Bounce Rate",
+                    "User Friction",
+                    "Customer Journey",
+                    "Revenue Per Visitor",
+                    "Product Discovery",
+                    "Mobile Optimization"
+                ],
+                metrics: [
+                    { name: "Conversion Rate", formula: "(Sales / Visitors) × 100" },
+                    { name: "Average Order Value (AOV)", formula: "Revenue / Orders" },
+                    { name: "Cart Abandonment Rate", formula: "(Abandoned Carts / Initiated Carts) × 100" }
+                ],
+                benefits: [
+                    "Identify barriers in the customer journey",
+                    "Enhance checkout flow",
+                    "Increase average order value"
+                ],
+                backgroundClass: "retail-background"
+            },
+            "Consumer Goods": {
+                terminology: [
+                    "Customer Retention",
+                    "Product Lifecycle",
+                    "Market Share Growth",
+                    "Customer Feedback",
+                    "Cross-Selling Opportunities",
+                    "Purchase Behavior",
+                    "Customer Lifetime Value",
+                    "Brand Loyalty",
+                    "Repeat Purchases",
+                    "Order Frequency"
+                ],
+                metrics: [
+                    { name: "Customer Retention Rate", formula: "((End Customers - New Customers) / Start Customers) × 100" },
+                    { name: "Customer Lifetime Value (CLV)", formula: "Average Purchase Value × Purchase Frequency × Customer Lifespan" },
+                    { name: "Churn Rate", formula: "(Lost Customers / Total Customers) × 100" }
+                ],
+                benefits: [
+                    "Enhance customer loyalty programs",
+                    "Identify high-value customers",
+                    "Optimize product recommendations"
+                ],
+                backgroundClass: "consumer-goods-background"
+            },
+            "Services": {
+                terminology: [
+                    "Client Satisfaction",
+                    "Service Efficiency",
+                    "First-Time Resolution",
+                    "Utilization Rate",
+                    "Customer Onboarding",
+                    "Ticket Resolution",
+                    "Support Journey",
+                    "Service Improvement",
+                    "Process Optimization",
+                    "Customer Effort Score"
+                ],
+                metrics: [
+                    { name: "First Contact Resolution", formula: "(Cases Resolved on First Contact / Total Cases) × 100" },
+                    { name: "Customer Satisfaction Score (CSAT)", formula: "(Number of Satisfied Customers / Total Responses) × 100" },
+                    { name: "Net Promoter Score (NPS)", formula: "(Promoters - Detractors) / Total Responses" }
+                ],
+                benefits: [
+                    "Enhance client satisfaction",
+                    "Improve service workflows",
+                    "Optimize employee performance"
+                ],
+                backgroundClass: "services-background"
+            },
+            "Food and Beverage": {
+                terminology: [
+                    "Menu Optimization",
+                    "Customer Loyalty",
+                    "Order Frequency",
+                    "Return Visits",
+                    "Table Turnover",
+                    "Order Accuracy",
+                    "Sales Conversion",
+                    "Online Ordering Experience",
+                    "Customer Retention",
+                    "Delivery Optimization"
+                ],
+                metrics: [
+                    { name: "Table Turnover Rate", formula: "(Customers Served / Available Tables)" },
+                    { name: "Order Accuracy Rate", formula: "(Accurate Orders / Total Orders) × 100" },
+                    { name: "Online Order Conversion Rate", formula: "(Completed Orders / Total Visitors) × 100" }
+                ],
+                benefits: [
+                    "Boost repeat customer visits",
+                    "Optimize online ordering experience",
+                    "Increase order value per customer"
+                ],
+                backgroundClass: "food-and-beverage-background"
+            },
+            "Fashion": {
+                terminology: [
+                    "Product Discovery",
+                    "Personalized Recommendations",
+                    "Seasonal Trends",
+                    "Style Preferences",
+                    "Product Pages Engagement",
+                    "Return Rate",
+                    "Shopping Cart Conversion",
+                    "Customer Segmentation",
+                    "Mobile Shopping Experience",
+                    "Flash Sales"
+                ],
+                metrics: [
+                    { name: "Conversion Rate", formula: "(Purchases / Visitors) × 100" },
+                    { name: "Return Rate", formula: "(Returned Items / Total Items Sold) × 100" },
+                    { name: "Customer Lifetime Value (CLV)", formula: "Average Purchase Value × Purchase Frequency × Customer Lifespan" }
+                ],
+                benefits: [
+                    "Enhance product recommendations",
+                    "Personalize shopping experiences",
+                    "Increase shopping cart conversion"
+                ],
+                backgroundClass: "fashion-background"
+            },
+            "DIY and Hardware": {
+                terminology: [
+                    "Product Search",
+                    "Customer Assistance",
+                    "Stock Availability",
+                    "Shopping Cart Size",
+                    "Replenishment",
+                    "Seasonal Sales",
+                    "Order Completion",
+                    "Delivery Optimization",
+                    "Bulk Ordering",
+                    "Customer Reviews"
+                ],
+                metrics: [
+                    { name: "Average Order Value (AOV)", formula: "Revenue / Orders" },
+                    { name: "Repeat Purchase Rate", formula: "(Repeat Customers / Total Customers) × 100" },
+                    { name: "Order Completion Rate", formula: "(Completed Orders / Total Orders) × 100" }
+                ],
+                benefits: [
+                    "Increase sales through targeted promotions",
+                    "Optimize product availability",
+                    "Enhance customer satisfaction"
+                ],
+                backgroundClass: "diy-hardware-background"
+            },
+            "Electronics": {
+                terminology: [
+                    "Tech Upgrades",
+                    "Return Rate",
+                    "Warranty Claims",
+                    "Shopping Cart Abandonment",
+                    "Customer Reviews",
+                    "Purchase Intent",
+                    "Product Recommendations",
+                    "Brand Loyalty",
+                    "Customer Feedback",
+                    "Feature Adoption"
+                ],
+                metrics: [
+                    { name: "Conversion Rate", formula: "(Sales / Visitors) × 100" },
+                    { name: "Return Rate", formula: "(Returns / Sales) × 100" },
+                    { name: "Customer Retention Rate", formula: "((End Customers - New Customers) / Start Customers) × 100" }
+                ],
+                benefits: [
+                    "Reduce product return rates",
+                    "Enhance purchase intent",
+                    "Improve tech upgrade recommendations"
+                ],
+                backgroundClass: "electronics-background"
+            },
+            "Media": {
+                terminology: [
+                    "Audience Engagement",
+                    "View Time",
+                    "Video Completion",
+                    "Click-Through Rate",
+                    "Subscriber Growth",
+                    "Content Consumption",
+                    "Audience Retention",
+                    "Content Personalization",
+                    "Social Sharing",
+                    "Bounce Rate"
+                ],
+                metrics: [
+                    { name: "Click-Through Rate", formula: "(Clicks / Impressions) × 100" },
+                    { name: "Audience Retention Rate", formula: "(Viewers Remaining / Total Viewers) × 100" },
+                    { name: "Subscriber Churn Rate", formula: "(Lost Subscribers / Total Subscribers) × 100" }
+                ],
+                benefits: [
+                    "Boost audience engagement",
+                    "Enhance content personalization",
+                    "Increase video completion rates"
+                ],
+                backgroundClass: "media-background"
+            },
+            "Beauty and Health": {
+                terminology: [
+                    "Product Recommendations",
+                    "Customer Reviews",
+                    "Subscription Rate",
+                    "Order Frequency",
+                    "Repeat Purchases",
+                    "Customer Satisfaction",
+                    "Product Discovery",
+                    "Personalization",
+                    "Beauty Trends",
+                    "Return Rate"
+                ],
+                metrics: [
+                    { name: "Customer Retention Rate", formula: "(Returning Customers / Total Customers) × 100" },
+                    { name: "Order Frequency", formula: "Total Orders / Total Customers" },
+                    { name: "Average Order Value (AOV)", formula: "Revenue / Orders" }
+                ],
+                benefits: [
+                    "Increase repeat purchases",
+                    "Enhance product recommendations",
+                    "Improve customer satisfaction"
+                ],
+                backgroundClass: "beauty-and-health-background"
+            },
+            "E-Learning": {
+                terminology: [
+                    "Engagement Metrics",
+                    "Completion Rate",
+                    "Course Drop-Off Rate",
+                    "Learning Progression",
+                    "Student Feedback",
+                    "Content Interaction",
+                    "Learning Paths",
+                    "Study Sessions",
+                    "Assessment Results",
+                    "Course Retention"
+                ],
+                metrics: [
+                    { name: "Course Completion Rate", formula: "(Completed Courses / Total Enrolled) × 100" },
+                    { name: "Drop-Off Rate", formula: "(Drop-Off Students / Total Students) × 100" },
+                    { name: "Student Retention Rate", formula: "(Returning Students / Total Students) × 100" }
+                ],
+                benefits: [
+                    "Improve student engagement",
+                    "Increase course completion rates",
+                    "Optimize learning paths"
+                ],
+                backgroundClass: "e-learning-background"
+            }
+        };
+        
+        // Enhanced persona interest mapping for better coverage across industries
+        const personaInterests = {
+            "product": {
+                highlightClass: "highlight-product",
+                terminologyKeywords: [
+                    "User Friction", "Customer Journey", "Product Discovery", "Mobile Optimization", 
+                    "Personalization", "Product Lifecycle", "Product Pages Engagement", "Feature Adoption", 
+                    "Learning Paths", "Content Interaction", "Process Optimization", "Service Improvement",
+                    "Shopping Cart", "Checkout", "Conversion Funnel", "Menu Optimization", 
+                    "Online Ordering Experience", "Product Recommendations", "Style Preferences",
+                    "Tech Upgrades", "Content Consumption", "Beauty Trends", "Engagement Metrics"
+                ],
+                metricsKeywords: [
+                    "Conversion Rate", "Bounce Rate", "Customer Effort Score", "Feature Adoption Rate",
+                    "Cart Abandonment Rate", "Order Completion Rate", "Course Completion Rate",
+                    "Drop-Off Rate", "Audience Retention Rate", "Online Order Conversion Rate"
+                ],
+                benefitsKeywords: [
+                    "customer journey", "checkout flow", "user experience", "product recommendations", 
+                    "workflow", "engagement", "learning paths", "online ordering experience",
+                    "optimize", "enhance product", "shopping experiences", "tech upgrade"
+                ]
+            },
+            "engineering": {
+                highlightClass: "highlight-engineering",
+                terminologyKeywords: [
+                    "Checkout Optimization", "Mobile Optimization", "User Friction", 
+                    "Order Accuracy", "Process Optimization", "Technical Performance", 
+                    "Online Ordering Experience", "Content Interaction", "Shopping Cart", 
+                    "Feature Adoption", "Delivery Optimization", "Cart Abandonment",
+                    "Video Completion", "Stock Availability", "Content Consumption",
+                    "Bounce Rate", "Learning Progression", "Assessment Results"
+                ],
+                metricsKeywords: [
+                    "Conversion Rate", "Order Completion Rate", "Cart Abandonment Rate", 
+                    "First Contact Resolution", "Order Accuracy Rate", "Online Order Conversion Rate",
+                    "Click-Through Rate", "Table Turnover Rate", "Video Completion Rate"
+                ],
+                benefitsKeywords: [
+                    "optimize", "enhance", "improve", "technical", "workflow", "performance",
+                    "checkout flow", "barriers", "product availability", "ordering experience"
+                ]
+            },
+            "sales": {
+                highlightClass: "highlight-sales",
+                terminologyKeywords: [
+                    "Conversion Funnel", "Revenue Per Visitor", "Market Share Growth", 
+                    "Cross-Selling Opportunities", "Sales Conversion", "Shopping Cart Conversion", 
+                    "Purchase Intent", "Average Order Value", "Customer Lifetime Value",
+                    "Brand Loyalty", "Customer Retention", "Order Frequency", "Repeat Purchases",
+                    "Flash Sales", "Seasonal Sales", "Bulk Ordering", "Subscriber Growth",
+                    "Subscription Rate", "Course Retention"
+                ],
+                metricsKeywords: [
+                    "Conversion Rate", "Average Order Value", "Customer Lifetime Value",
+                    "Customer Retention Rate", "Churn Rate", "Net Promoter Score",
+                    "Order Completion Rate", "Order Frequency", "Repeat Purchase Rate"
+                ],
+                benefitsKeywords: [
+                    "increase", "sales", "order value", "customer loyalty", "repeat", 
+                    "high-value customers", "growth", "revenue", "purchase", "subscriptions"
+                ]
+            },
+            "marketing": {
+                highlightClass: "highlight-marketing",
+                terminologyKeywords: [
+                    "Bounce Rate", "Content Personalization", "Audience Engagement", 
+                    "Customer Segmentation", "Brand Loyalty", "Social Sharing", 
+                    "Click-Through Rate", "Conversion Rate", "Product Discovery",
+                    "Flash Sales", "Seasonal Trends", "Seasonal Sales", "Customer Feedback",
+                    "Market Share Growth", "Purchase Behavior", "Purchase Intent",
+                    "Beauty Trends", "Content Consumption", "Audience Retention"
+                ],
+                metricsKeywords: [
+                    "Conversion Rate", "Bounce Rate", "Click-Through Rate", "Cart Abandonment Rate",
+                    "Audience Retention Rate", "Churn Rate", "Net Promoter Score",
+                    "Customer Satisfaction Score", "Average Order Value"
+                ],
+                benefitsKeywords: [
+                    "engagement", "personalization", "recommendations", "promotions", "target",
+                    "loyalty", "audience", "customer journey", "content", "satisfaction"
+                ]
+            },
+            "support": {
+                highlightClass: "highlight-support",
+                terminologyKeywords: [
+                    "Customer Feedback", "Ticket Resolution", "First-Time Resolution", 
+                    "Customer Effort Score", "User Friction", "Customer Satisfaction Score", 
+                    "Order Accuracy", "Customer Assistance", "Return Rate", "Warranty Claims",
+                    "Customer Reviews", "Student Feedback", "Customer Onboarding", 
+                    "Service Efficiency", "Support Journey", "Service Improvement"
+                ],
+                metricsKeywords: [
+                    "First Contact Resolution", "Customer Satisfaction Score", "Customer Effort Score",
+                    "Net Promoter Score", "Order Accuracy Rate", "Return Rate",
+                    "Customer Retention Rate"
+                ],
+                benefitsKeywords: [
+                    "satisfaction", "client satisfaction", "service", "support", "accuracy",
+                    "reduce return", "customer assistance", "optimize employee performance",
+                    "improve", "enhance"
+                ]
+            },
+            "success": {
+                highlightClass: "highlight-success",
+                terminologyKeywords: [
+                    "Customer Retention", "Customer Lifetime Value", "Repeat Purchases", 
+                    "Customer Onboarding", "Customer Loyalty", "Customer Satisfaction Score", 
+                    "Return Visits", "Customer Feedback", "Customer Segmentation", "Brand Loyalty",
+                    "Customer Reviews", "Audience Retention", "Order Frequency", "Subscription Rate",
+                    "Student Feedback", "Course Retention", "Learning Progression"
+                ],
+                metricsKeywords: [
+                    "Customer Retention Rate", "Customer Lifetime Value", "Churn Rate",
+                    "Customer Satisfaction Score", "Net Promoter Score", "Repeat Purchase Rate",
+                    "Order Frequency", "Student Retention Rate", "Subscriber Churn Rate"
+                ],
+                benefitsKeywords: [
+                    "loyalty", "retention", "repeat", "satisfaction", "high-value customers",
+                    "engagement", "customer journey", "improve", "enhance", "completion"
+                ]
+            },
+            "executive": {
+                highlightClass: "highlight-executive",
+                terminologyKeywords: [
+                    "Conversion Rate", "Customer Lifetime Value", "Market Share Growth", 
+                    "Revenue Per Visitor", "Customer Retention Rate", "Average Order Value", 
+                    "Net Promoter Score", "Customer Satisfaction", "Brand Loyalty",
+                    "Shopping Cart Conversion", "Table Turnover Rate", "Order Completion Rate",
+                    "Subscriber Growth", "Audience Retention", "Course Completion Rate"
+                ],
+                metricsKeywords: [
+                    "Conversion Rate", "Customer Lifetime Value", "Customer Retention Rate",
+                    "Net Promoter Score", "Average Order Value", "Churn Rate",
+                    "Customer Satisfaction Score", "Order Completion Rate", "Course Completion Rate"
+                ],
+                benefitsKeywords: [
+                    "increase", "enhance", "optimize", "growth", "customer loyalty", "revenue",
+                    "high-value customers", "performance", "satisfaction", "engagement"
+                ]
+            }
+        };
+
+        // Function to generate a persona-specific reason
+        function getPersonaSpecificReason(term, selectedPersona) {
+            // Prefix for different personas
+            const personaPrefixes = {
+                "product": "Product managers",
+                "engineering": "Engineering teams",
+                "sales": "Sales teams",
+                "marketing": "Marketing teams",
+                "support": "Support teams",
+                "success": "Success teams",
+                "executive": "Executives"
+            };
+            
+            // First check if we have a pre-defined reason for this term
+            if (personaReasons[term]) {
+                const reason = personaReasons[term];
+                
+                // Check if the reason already mentions the selected persona
+                const selectedPrefix = personaPrefixes[selectedPersona];
+                if (reason.startsWith(selectedPrefix)) {
+                    return reason;
+                }
+                
+                // Check if the reason mentions any persona
+                for (const persona in personaPrefixes) {
+                    const prefix = personaPrefixes[persona];
+                    if (reason.startsWith(prefix)) {
+                        // Replace with selected persona
+                        return reason.replace(prefix, personaPrefixes[selectedPersona]);
+                    }
+                }
+                
+                // If no persona is mentioned, add the selected persona prefix
+                return `${personaPrefixes[selectedPersona]} use FullStory to analyze ${term.toLowerCase()} for improving customer experiences.`;
+            }
+            
+            // If no predefined reason, create a generic one based on the term and persona
+            return `${personaPrefixes[selectedPersona]} use FullStory to analyze ${term.toLowerCase()} for improving customer experiences.`;
+        }
+
+        // Function to clear all persona highlights
+        function clearAllHighlights() {
+            // Remove all highlight classes from elements
+            document.querySelectorAll('.highlight-product, .highlight-engineering, .highlight-sales, .highlight-marketing, .highlight-support, .highlight-success, .highlight-executive').forEach(el => {
+                // Get the text content
+                const text = el.textContent;
+                
+                // Replace the element with just its text content
+                const parent = el.parentElement;
+                if (parent) {
+                    parent.textContent = text;
+                }
+            });
+            
+            // Remove all info icons
+            document.querySelectorAll('.info-icon').forEach(icon => {
+                icon.remove();
+            });
+        }        
+
+        // Function to filter content based on selected industry
+        function filterContent() {
+            const selectedIndustry = document.getElementById('industrySelect').value;
+            
+            if (selectedIndustry === "") {
+                // Hide all sections if no industry is selected
+                document.getElementById('terminologySection').style.display = 'none';
+                document.getElementById('metricsSection').style.display = 'none';
+                document.getElementById('benefitsSection').style.display = 'none';
+                // Reset body background
+                document.body.className = '';
+                return;
+            }
+            
+            const data = industryData[selectedIndustry];
+            
+            // Replace the terminology list creation portion in your filterContent function:
+            // Update terminology list
+            const terminologyList = document.getElementById('terminologyList');
+            terminologyList.innerHTML = '';
+            data.terminology.forEach(term => {
+                const li = document.createElement('li');
+                li.setAttribute('data-term', term);
+                
+                // Create text node
+                const textNode = document.createTextNode(term);
+                li.appendChild(textNode);
+                
+                terminologyList.appendChild(li);
+            });
+            
+            // Update metrics table
+            const metricsTable = document.getElementById('metricsTable');
+            metricsTable.innerHTML = '';
+            data.metrics.forEach(metric => {
+                const row = document.createElement('tr');
+                
+                // Create metric name cell with container for icon
+                const nameCell = document.createElement('td');
+                const nameContainer = document.createElement('span');
+                nameContainer.className = 'highlight-container';
+                nameContainer.textContent = metric.name;
+                nameCell.appendChild(nameContainer);
+                
+                // Create formula cell
+                const formulaCell = document.createElement('td');
+                formulaCell.textContent = metric.formula;
+                
+                row.appendChild(nameCell);
+                row.appendChild(formulaCell);
+                metricsTable.appendChild(row);
+            });
+            
+            // Update benefits list
+            const benefitsList = document.getElementById('benefitsList');
+            benefitsList.innerHTML = '';
+            data.benefits.forEach(benefit => {
+                const li = document.createElement('li');
+                
+                // Wrap in a container for proper icon positioning
+                const container = document.createElement('span');
+                container.className = 'highlight-container';
+                container.textContent = benefit;
+                li.appendChild(container);
+                
+                benefitsList.appendChild(li);
+            });
+            
+            // Show all sections
+            document.getElementById('terminologySection').style.display = 'block';
+            document.getElementById('metricsSection').style.display = 'block';
+            document.getElementById('benefitsSection').style.display = 'block';
+            
+            // Apply industry-specific background
+            document.body.className = data.backgroundClass;
+            
+            // Re-apply persona highlights if a persona is selected
+            applyPersonaHighlights();
+        }
+
+        // Updated addInfoIcon function to consider persona context
+        function addInfoIcon(element, reason, persona) {
+            // Check if an info icon already exists to avoid duplicates
+            const existingIcon = element.querySelector('.info-icon');
+            if (existingIcon) {
+                existingIcon.remove();
+            }
+            
+            // Create the info icon
+            const infoIcon = document.createElement('span');
+            infoIcon.className = 'info-icon';
+            infoIcon.textContent = 'i';
+            
+            // Store both reason and persona for context
+            infoIcon.setAttribute('data-reason', reason);
+            infoIcon.setAttribute('data-persona', persona);
+            
+            // Add event listeners for tooltip
+            infoIcon.addEventListener('mouseenter', showTooltip);
+            infoIcon.addEventListener('mouseleave', hideTooltip);
+            
+            // Append icon after the text, not inside it
+            element.appendChild(infoIcon);
+        }        
+
+        // Updated showTooltip to consider persona context
+        function showTooltip(event) {
+            const reason = event.target.getAttribute('data-reason');
+            const persona = event.target.getAttribute('data-persona');
+            const tooltip = document.getElementById('globalTooltip');
+            
+            // Persona-specific formatting for tooltip
+            if (persona) {
+                // If the reason doesn't already mention the persona type, prepend it
+                if (!reason.toLowerCase().includes(persona.toLowerCase())) {
+                    const personaTitle = getPersonaTitle(persona);
+                    tooltip.textContent = `${personaTitle}: ${reason}`;
+                } else {
+                    tooltip.textContent = reason;
+                }
+            } else {
+                tooltip.textContent = reason;
+            }
+            
+            tooltip.style.display = 'block';
+            
+            // Position the tooltip near the info icon
+            const rect = event.target.getBoundingClientRect();
+            tooltip.style.top = (rect.top + window.scrollY - tooltip.offsetHeight - 10) + 'px';
+            tooltip.style.left = (rect.left + window.scrollX - (tooltip.offsetWidth / 2) + (rect.width / 2)) + 'px';
+            
+            // Slight delay to trigger fade-in animation
+            setTimeout(() => {
+                tooltip.classList.add('visible');
+            }, 10);
+        }        
+
+        function hideTooltip() {
+            const tooltip = document.getElementById('globalTooltip');
+            tooltip.classList.remove('visible');
+            
+            // Wait for fade out before hiding
+            setTimeout(() => {
+                tooltip.style.display = 'none';
+            }, 300);
+        }
+        
+        // Update the applyPersonaHighlights function to use this new helper
+        function applyPersonaHighlights() {
+            const selectedPersona = document.getElementById('personaSelect').value;
+            const selectedIndustry = document.getElementById('industrySelect').value;
+            
+            // If no industry selected, return
+            if (!selectedIndustry) return;
+            
+            // If no persona or "Choose a Persona" selected, clear all highlights and return
+            if (!selectedPersona || selectedPersona === "") {
+                clearAllHighlights();
+                return;
+            }
+            
+            // Get data for selected industry
+            const data = industryData[selectedIndustry];
+            
+            // First, remove all existing highlights and info icons
+            clearAllHighlights();
+            
+            // Get persona interests
+            const interests = personaInterests[selectedPersona];
+            if (!interests) return;
+            
+            // Track highlighting to ensure at least one item is highlighted in each section
+            let terminologyHighlighted = false;
+            let metricsHighlighted = false;
+            let benefitsHighlighted = false;
+            
+            // Apply highlights to terminology
+            data.terminology.forEach((term) => {
+                if (interests.terminologyKeywords.includes(term)) {
+                    // Find the list item with this term
+                    const listItem = document.querySelector(`#terminologyList li[data-term="${term}"]`);
+                    
+                    // Make sure we found the list item
+                    if (listItem) {
+                        // Get text content
+                        const text = listItem.textContent;
+                        
+                        // Clear the list item content but maintain attributes
+                        listItem.innerHTML = '';
+                        
+                        // Create highlighted element
+                        const highlightedSpan = document.createElement('span');
+                        highlightedSpan.className = interests.highlightClass;
+                        highlightedSpan.textContent = text;
+                        
+                        // Add to list item
+                        listItem.appendChild(highlightedSpan);
+                        
+                        // Generate persona-specific reason and add info icon
+                        const personaReason = getPersonaSpecificReason(term, selectedPersona);
+                        addInfoIcon(listItem, personaReason, selectedPersona);
+                        
+                        terminologyHighlighted = true;
+                    }
+                }
+            });
+
+            
+            // If no terminology was highlighted, highlight the first matching one or fallback to first item
+            if (!terminologyHighlighted && data.terminology.length > 0) {
+                // Try to find any term that has info for this persona
+                let fallbackTerm = data.terminology.find(term => 
+                    personaReasons[term] && 
+                    (personaReasons[term].toLowerCase().includes(selectedPersona) || 
+                    personaInterests[selectedPersona].terminologyKeywords.includes(term))
+                ) || data.terminology[0]; // Fallback to first term if none match
+                
+                const listItem = document.querySelector(`#terminologyList li[data-term="${fallbackTerm}"]`);
+                if (listItem) {
+                    const text = listItem.textContent;
+                    listItem.innerHTML = '';
+                    const highlightedSpan = document.createElement('span');
+                    highlightedSpan.className = interests.highlightClass;
+                    highlightedSpan.textContent = text;
+                    listItem.appendChild(highlightedSpan);
+                    
+                    // Add info icon with generic reason if needed
+                    if (personaReasons[fallbackTerm]) {
+                        addInfoIcon(listItem, personaReasons[fallbackTerm], selectedPersona);
+                    } else {
+                        // Create a generic reason based on the persona
+                        const genericReason = `${capitalize(selectedPersona)} teams analyze ${fallbackTerm.toLowerCase()} to optimize customer experiences.`;
+                        addInfoIcon(listItem, genericReason, selectedPersona);
+                    }
+                }
+            }
+
+            // Apply highlights to metrics
+            data.metrics.forEach((metric, index) => {
+                if (interests.metricsKeywords.includes(metric.name)) {
+                    const row = document.getElementById('metricsTable').rows[index];
+                    
+                    // Make sure we found the row
+                    if (row && row.cells[0]) {
+                        const cell = row.cells[0];
+                        
+                        // Get text content
+                        const text = cell.textContent;
+                        
+                        // Clear the cell
+                        cell.innerHTML = '';
+                        
+                        // Create highlighted element
+                        const highlightedSpan = document.createElement('span');
+                        highlightedSpan.className = interests.highlightClass;
+                        highlightedSpan.textContent = text;
+                        
+                        // Add to cell
+                        cell.appendChild(highlightedSpan);
+                        
+                        // Add info icon with reason - fixed to use persona-specific reasons
+                        if (personaReasons[metric.name]) {
+                            addInfoIcon(cell, personaReasons[metric.name], selectedPersona);
+                        }
+                        
+                        metricsHighlighted = true;
+                    }
+                }
+            });
+            
+            // If no metrics were highlighted, highlight the first one as fallback
+            if (!metricsHighlighted && data.metrics.length > 0) {
+                // Try to find any metric that has info for this persona
+                let fallbackMetric = data.metrics.find(metric => 
+                    personaReasons[metric.name] && 
+                    (personaReasons[metric.name].toLowerCase().includes(selectedPersona) || 
+                    personaInterests[selectedPersona].metricsKeywords.includes(metric.name))
+                ) || data.metrics[0]; // Fallback to first metric if none match
+                
+                const row = document.getElementById('metricsTable').rows[data.metrics.indexOf(fallbackMetric)];
+                if (row && row.cells[0]) {
+                    const cell = row.cells[0];
+                    const text = cell.textContent;
+                    cell.innerHTML = '';
+                    const highlightedSpan = document.createElement('span');
+                    highlightedSpan.className = interests.highlightClass;
+                    highlightedSpan.textContent = text;
+                    cell.appendChild(highlightedSpan);
+                    
+                    // Add info icon with generic reason if needed
+                    if (personaReasons[fallbackMetric.name]) {
+                        addInfoIcon(cell, personaReasons[fallbackMetric.name], selectedPersona);
+                    } else {
+                        // Create a generic reason based on the persona
+                        const genericReason = `${capitalize(selectedPersona)} teams track ${fallbackMetric.name.toLowerCase()} to measure success.`;
+                        addInfoIcon(cell, genericReason, selectedPersona);
+                    }
+                }
+            }           
+
+            // Apply highlights to benefits
+            data.benefits.forEach((benefit, index) => {
+                // Check if any keyword is in the benefit text
+                const shouldHighlight = interests.benefitsKeywords.some(keyword => 
+                    benefit.toLowerCase().includes(keyword.toLowerCase()));
+                
+                if (shouldHighlight) {
+                    const listItem = document.getElementById('benefitsList').children[index];
+                    
+                    // Make sure we found the list item
+                    if (listItem) {
+                        // Get text content
+                        const text = listItem.textContent;
+                        
+                        // Clear the list item
+                        listItem.innerHTML = '';
+                        
+                        // Create highlighted element
+                        const highlightedSpan = document.createElement('span');
+                        highlightedSpan.className = interests.highlightClass;
+                        highlightedSpan.textContent = text;
+                        
+                        // Add to list item
+                        listItem.appendChild(highlightedSpan);
+                        
+                        // Fix: Look for exact match OR create a persona-specific reason
+                        if (personaReasons[benefit]) {
+                            addInfoIcon(listItem, personaReasons[benefit], selectedPersona);
+                        } else {
+                            // Create a custom reason based on the benefit and persona
+                            const customReason = `${capitalize(selectedPersona)} teams focus on this to ${benefit.toLowerCase().includes('increase') ? 'drive growth' : 'improve customer experience'}.`;
+                            addInfoIcon(listItem, customReason, selectedPersona);
+                        }
+                        
+                        benefitsHighlighted = true;
+                    }
+                }
+            });
+
+            // If no benefits were highlighted, highlight the first one as fallback
+            if (!benefitsHighlighted && data.benefits.length > 0) {
+                const listItem = document.getElementById('benefitsList').children[0];
+                if (listItem) {
+                    const text = listItem.textContent;
+                    listItem.innerHTML = '';
+                    const highlightedSpan = document.createElement('span');
+                    highlightedSpan.className = interests.highlightClass;
+                    highlightedSpan.textContent = text;
+                    listItem.appendChild(highlightedSpan);
+                    
+                    // Create a custom reason based on the persona
+                    const genericReason = `${capitalize(selectedPersona)} teams use FullStory to ${data.benefits[0].toLowerCase()}.`;
+                    addInfoIcon(listItem, genericReason, selectedPersona);
+                }
+            }            
+
+
+        }
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set up event listeners
+            document.getElementById('industrySelect').addEventListener('change', filterContent);
+            document.getElementById('personaSelect').addEventListener('change', applyPersonaHighlights);
+            
+            // Create tooltip container for reuse
+            const tooltip = document.getElementById('globalTooltip');
+            document.body.appendChild(tooltip);
+        });
+
+        // Helper functions
+        function capitalize(string) {
+            return string.charAt(0).toUpperCase() + string.slice(1);
+        }
+
+        function getPersonaTitle(persona) {
+            const titles = {
+                'product': 'Product Manager',
+                'engineering': 'Engineering',
+                'sales': 'Sales',
+                'marketing': 'Marketing',
+                'support': 'Support',
+                'success': 'Customer Success',
+                'executive': 'Executive'
+            };
+            return titles[persona] || capitalize(persona);
+        }
+    </script>
+</body>
+</html>
