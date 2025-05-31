@@ -4,10 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FullStory</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+    <link rel="stylesheet" 
+href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
     <style>
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 
+sans-serif;
             margin: 20px;
             background-color: #f4f4f4;
             color: #333;
@@ -32,7 +34,8 @@
             font-size: 1.2rem;
             margin-bottom: 0.8rem;
         }
-        select {
+        /* REMOVED NATIVE SELECT STYLES */
+        /* select {
             padding: 10px;
             margin: 10px 0;
             font-size: 16px;
@@ -40,7 +43,7 @@
             border-radius: 6px;
             border: 1px solid #ddd;
             background-color: white;
-        }
+        } */
         .section {
             margin-bottom: 30px;
             padding: 24px;
@@ -73,7 +76,8 @@
             position: relative; /* For icon positioning */
         }
 
-        /* Industry-specific background colors - adjusted for better aesthetics */
+        /* Industry-specific background colors - adjusted for better 
+aesthetics */
         .retail-background { background-color: #D5A6BD; }
         .consumer-goods-background { background-color: #D9A77B; }
         .services-background { background-color: #9BBF9F; }
@@ -135,45 +139,131 @@
             position: relative; /* For icon positioning */
         }
         
-        /* .dropdowns {
-            display: flex;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
-        
-        .dropdown-container {
-            flex: 1;
-            min-width: 250px;
-        } */
-
         .dropdowns {
             display: flex;
-            gap: 20px; /* Maintains the 20px space between the two dropdown containers */
+            gap: 20px; /* Maintains the 20px space between the two 
+dropdown containers */
             flex-wrap: wrap;
-            justify-content: center; /* This centers the flex items (the two dropdown-containers) within the .dropdowns container */
+            justify-content: center; /* This centers the flex items (the 
+two dropdown-containers) within the .dropdowns container */
             
             /* --- NEW ADDITION --- */
-            max-width: 600px; /* Adjust this value as needed. This limits the total width of the two dropdowns + gap. */
-            margin: 0 auto; /* This centers the .dropdowns container itself on the page. */
+            max-width: 600px; /* Adjust this value as needed. This limits 
+the total width of the two dropdowns + gap. */
+            margin: 0 auto; /* This centers the .dropdowns container 
+itself on the page. */
             /* --- END NEW ADDITION --- */
         }
         
         .dropdown-container {
             flex: 1;
             min-width: 250px;
-            text-align: left; /* Ensures the H3 title and the select filter are left-aligned within their box */
+            text-align: left; /* Ensures the H3 title and the select 
+filter are left-aligned within their box */
+            position: relative; /* Crucial for positioning the dropdown 
+list */
         }
 
-        /* To ensure the select elements themselves are consistently left-aligned and sized */
-        .dropdown-container select {
-            display: block; /* Makes the select a block-level element so it respects margin/width more predictably */
-            margin: 10px 0; /* Top/bottom margin 10px, no left/right auto margin so it stays left */
+        /* CUSTOM DROPDOWN STYLES */
+        .custom-dropdown-select {
+            display: block; /* Makes the select a block-level element so 
+it respects margin/width more predictably */
+            margin: 10px 0; /* Top/bottom margin 10px, no left/right auto 
+margin so it stays left */
             width: 100%; /* Takes up full width of its container */
-            max-width: 300px; /* Optional: Sets a max width for responsiveness, ensure this is less than or equal to min-width of container if applicable */
-            box-sizing: border-box; /* Includes padding and border in the element's total width */
+            max-width: 300px; /* Optional: Sets a max width for 
+responsiveness, ensure this is less than or equal to min-width of 
+container if applicable */
+            box-sizing: border-box; /* Includes padding and border in the 
+element's total width */
+
+            padding: 10px;
+            font-size: 16px;
+            font-family: 'Inter', sans-serif;
+            border-radius: 6px;
+            border: 1px solid #ddd;
+            background-color: white;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            -webkit-appearance: none; /* Remove default browser styling 
+for select */
+            -moz-appearance: none;
+            appearance: none;
         }
 
-        /* Ensure no lingering overrides from previous attempts if present in your full CSS */
+        .custom-dropdown-select::after {
+            content: '⬇'; /* Dropdown arrow */
+            font-size: 0.8em;
+            color: #888;
+            margin-left: 10px;
+            transition: transform 0.2s;
+        }
+
+        .custom-dropdown-select.open::after {
+            transform: rotate(180deg);
+        }
+
+        .custom-dropdown-options {
+            display: none;
+            position: absolute;
+            top: calc(100% + 5px); /* Position below the select */
+            left: 0;
+            width: 100%;
+            max-width: 300px; /* Keep max-width to constrain horizontal size */
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            z-index: 100; /* Ensure it's above other content */
+            /* REMOVE OR COMMENT OUT THESE LINES: */
+            /* max-height: 200px; */
+            /* overflow-y: auto; */
+            /* OR, if you want a very generous limit instead of infinite expansion, set a very large max-height */
+            /* max-height: 500px; */ /* Example of a much larger height */
+        }
+
+        .custom-dropdown-options.open {
+            display: block;
+        }
+
+        .custom-dropdown-option {
+            padding: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            font-family: 'Inter', sans-serif;
+            transition: background-color 0.2s, color 0.2s;
+        }
+
+        .custom-dropdown-option:hover {
+            background-color: #f0f0f0;
+        }
+
+        .custom-dropdown-option.selected {
+            background-color: #e0e0e0;
+            font-weight: 500;
+            color: #333;
+        }
+
+
+        /* To ensure the select elements themselves are consistently 
+left-aligned and sized */
+        /* .dropdown-container select { */
+            /* display: block; Makes the select a block-level element so 
+it respects margin/width more predictably */
+            /* margin: 10px 0; Top/bottom margin 10px, no left/right auto 
+margin so it stays left */
+            /* width: 100%; Takes up full width of its container */
+            /* max-width: 300px; Optional: Sets a max width for 
+responsiveness, ensure this is less than or equal to min-width of 
+container if applicable */
+            /* box-sizing: border-box; Includes padding and border in the 
+element's total width */
+        /* } */
+
+        /* Ensure no lingering overrides from previous attempts if present 
+in your full CSS */
         .dropdown-container h3 {
             margin-left: 0;
             padding-left: 0;
@@ -246,7 +336,8 @@
             font-size: 1.8rem;
             margin-right: 8px;
             color: #00c79a;
-            background-color: #fff; /* Or keep background darker for contrast */
+            background-color: #fff; /* Or keep background darker for 
+contrast */
             padding: 0.2em 0.4em;
             border-radius: 4px; /* Optional polish */  
         }
@@ -648,32 +739,59 @@
         <div class="dropdowns">
             <div class="dropdown-container">
                 <h3>Industries</h3>
-                <select id="industrySelect" onchange="filterContent()">
-                    <option value="">--Choose an Industry--</option>
-                    <option value="Retail">Retail</option>
-                    <option value="Consumer Goods">Consumer Goods</option>
-                    <option value="Services">Services</option>
-                    <option value="Food and Beverage">Food and Beverage</option>
-                    <option value="Fashion">Fashion</option>
-                    <option value="DIY and Hardware">DIY and Hardware</option>
-                    <option value="Electronics">Electronics</option>
-                    <option value="Media">Media</option>
-                    <option value="Beauty and Health">Beauty and Health</option>
-                    <option value="E-Learning">E-Learning</option>
-                </select>
+                <div class="custom-dropdown" id="industryDropdown">
+                    <div class="custom-dropdown-select" 
+data-value="">--Choose an Industry--</div>
+                    <div class="custom-dropdown-options">
+                        <div class="custom-dropdown-option" 
+data-value="">--Choose an Industry--</div>
+                        <div class="custom-dropdown-option" 
+data-value="Retail">Retail</div>
+                        <div class="custom-dropdown-option" 
+data-value="Consumer Goods">Consumer Goods</div>
+                        <div class="custom-dropdown-option" 
+data-value="Services">Services</div>
+                        <div class="custom-dropdown-option" 
+data-value="Food and Beverage">Food and Beverage</div>
+                        <div class="custom-dropdown-option" 
+data-value="Fashion">Fashion</div>
+                        <div class="custom-dropdown-option" 
+data-value="DIY and Hardware">DIY and Hardware</div>
+                        <div class="custom-dropdown-option" 
+data-value="Electronics">Electronics</div>
+                        <div class="custom-dropdown-option" 
+data-value="Media">Media</div>
+                        <div class="custom-dropdown-option" 
+data-value="Beauty and Health">Beauty and Health</div>
+                        <div class="custom-dropdown-option" 
+data-value="E-Learning">E-Learning</div>
+                    </div>
+                </div>
             </div>
             <div class="dropdown-container">
                 <h3>User Personas</h3>
-                <select id="personaSelect" onchange="applyPersonaHighlights()">
-                    <option value="">--Choose a Persona--</option>
-                    <option value="product">Product Manager</option>
-                    <option value="engineering">Engineering</option>
-                    <option value="sales">Sales</option>
-                    <option value="marketing">Marketing</option>
-                    <option value="support">Support</option>
-                    <option value="success">Customer Success</option>
-                    <option value="executive">C-Level Executive</option>
-                </select>
+                <div class="custom-dropdown" id="personaDropdown">
+                    <div class="custom-dropdown-select" 
+data-value="">--Choose a Persona--</div>
+                    <div class="custom-dropdown-options">
+                        <div class="custom-dropdown-option" 
+data-value="">--Choose a Persona--</div>
+                        <div class="custom-dropdown-option" 
+data-value="product">Product Manager</div>
+                        <div class="custom-dropdown-option" 
+data-value="engineering">Engineering</div>
+                        <div class="custom-dropdown-option" 
+data-value="sales">Sales</div>
+                        <div class="custom-dropdown-option" 
+data-value="marketing">Marketing</div>
+                        <div class="custom-dropdown-option" 
+data-value="support">Support</div>
+                        <div class="custom-dropdown-option" 
+data-value="success">Customer Success</div>
+                        <div class="custom-dropdown-option" 
+data-value="executive">C-Level Executive</div>
+                    </div>
+                </div>
             </div>
         </div>
         
@@ -682,7 +800,8 @@
                 📊 View Customer Success Stories
             </button>
             <p style="color: #666; margin-top: 10px; font-style: italic;">
-                Discover how product analytics reveals the "WHY" and "SO WHAT" behind user behavior
+                Discover how product analytics reveals the "WHY" and "SO 
+WHAT" behind user behavior
             </p>
         </div>
     </div>
@@ -713,22 +832,30 @@
     <div id="storiesModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <span class="close" onclick="closeStoriesModal()">&times;</span>
+                <span class="close" 
+onclick="closeStoriesModal()">&times;</span>
                 <h2>Customer Success Stories</h2>
-                <p>Real-world examples of how FullStory's product analytics and session replay uncover the "WHY" behind user behavior and the "SO WHAT" for business impact</p>
+                <p>Real-world examples of how FullStory's product 
+analytics and session replay uncover the "WHY" behind user behavior and 
+the "SO WHAT" for business impact</p>
             </div>
             
             <div class="stories-container">
                 <div class="story-nav">
-                    <button class="story-tab active" onclick="showStory(1)">E-Commerce Retailer</button>
-                    <button class="story-tab" onclick="showStory(2)">SaaS Platform</button>
-                    <button class="story-tab" onclick="showStory(3)">Financial Services</button>
+                    <button class="story-tab active" 
+onclick="showStory(1)">E-Commerce Retailer</button>
+                    <button class="story-tab" onclick="showStory(2)">SaaS 
+Platform</button>
+                    <button class="story-tab" 
+onclick="showStory(3)">Financial Services</button>
                 </div>
 
                 <div id="story1" class="story active">
                     <div class="story-header">
-                        <div class="story-title">MegaMart: From 67% Cart Abandonment to 23% Conversion Boost</div>
-                        <div class="story-subtitle">How session replay revealed hidden checkout friction costing $2.3M annually</div>
+                        <div class="story-title">MegaMart: From 67% Cart 
+Abandonment to 23% Conversion Boost</div>
+                        <div class="story-subtitle">How session replay 
+revealed hidden checkout friction costing $2.3M annually</div>
                         <div class="company-info">
                             <div class="info-item">
                                 <div class="info-icon-company">🏪</div>
@@ -748,20 +875,30 @@
                     <div class="story-section">
                         <div class="section-title">
                             <div class="section-icon">❗</div>
-                            The Challenge: High Cart Abandonment with No Clear Cause
+                            The Challenge: High Cart Abandonment with No 
+Clear Cause
                         </div>
                         <div class="challenge-grid">
                             <div class="challenge-item">
-                                <div class="item-title">Mysterious 67% Cart Abandonment</div>
-                                <div class="item-description">Analytics showed users were abandoning carts, but traditional tools couldn't explain why. Teams were making assumptions based on incomplete data.</div>
+                                <div class="item-title">Mysterious 67% 
+Cart Abandonment</div>
+                                <div class="item-description">Analytics 
+showed users were abandoning carts, but traditional tools couldn't explain 
+why. Teams were making assumptions based on incomplete data.</div>
                             </div>
                             <div class="challenge-item">
-                                <div class="item-title">Mobile Conversion 40% Lower</div>
-                                <div class="item-description">Mobile users were converting significantly less than desktop users, but heatmaps and funnel analysis couldn't pinpoint the specific issues.</div>
+                                <div class="item-title">Mobile Conversion 
+40% Lower</div>
+                                <div class="item-description">Mobile users 
+were converting significantly less than desktop users, but heatmaps and 
+funnel analysis couldn't pinpoint the specific issues.</div>
                             </div>
                             <div class="challenge-item">
-                                <div class="item-title">Lost Revenue Impact</div>
-                                <div class="item-description">Each percentage point of cart abandonment represented approximately <span class="metric-highlight">$340K in lost annual revenue</span>.</div>
+                                <div class="item-title">Lost Revenue 
+Impact</div>
+                                <div class="item-description">Each 
+percentage point of cart abandonment represented approximately <span 
+class="metric-highlight">$340K in lost annual revenue</span>.</div>
                             </div>
                         </div>
                     </div>
@@ -769,26 +906,41 @@
                     <div class="story-section">
                         <div class="section-title">
                             <div class="section-icon">🔍</div>
-                            The "WHY": FullStory Session Replay Reveals the Truth
+                            The "WHY": FullStory Session Replay Reveals 
+the Truth
                         </div>
                         <div class="solution-grid">
                             <div class="solution-item">
-                                <div class="item-title">Hidden Form Field Issues</div>
-                                <div class="item-description">Session replay showed users repeatedly clicking on address fields that weren't responding properly on mobile devices. Users would try 3-4 times before giving up.</div>
+                                <div class="item-title">Hidden Form Field 
+Issues</div>
+                                <div class="item-description">Session 
+replay showed users repeatedly clicking on address fields that weren't 
+responding properly on mobile devices. Users would try 3-4 times before 
+giving up.</div>
                             </div>
                             <div class="solution-item">
-                                <div class="item-title">Payment Method Confusion</div>
-                                <div class="item-description">Users were confused by the payment flow - session replay revealed they expected Apple Pay/Google Pay options but couldn't find them easily.</div>
+                                <div class="item-title">Payment Method 
+Confusion</div>
+                                <div class="item-description">Users were 
+confused by the payment flow - session replay revealed they expected Apple 
+Pay/Google Pay options but couldn't find them easily.</div>
                             </div>
                             <div class="solution-item">
-                                <div class="item-title">Error Message Blind Spots</div>
-                                <div class="item-description">Critical error messages were appearing below the fold on mobile, so users never saw why their checkout was failing.</div>
+                                <div class="item-title">Error Message 
+Blind Spots</div>
+                                <div class="item-description">Critical 
+error messages were appearing below the fold on mobile, so users never saw 
+why their checkout was failing.</div>
                             </div>
                         </div>
 
                         <div class="key-insight">
-                            <div class="insight-title">Key "WHY" Insight</div>
-                            <div class="insight-text">Traditional analytics told us WHAT was happening (cart abandonment), but FullStory's session replay showed us WHY it was happening - specific UX friction points that were invisible in aggregate data.</div>
+                            <div class="insight-title">Key "WHY" 
+Insight</div>
+                            <div class="insight-text">Traditional 
+analytics told us WHAT was happening (cart abandonment), but FullStory's 
+session replay showed us WHY it was happening - specific UX friction 
+points that were invisible in aggregate data.</div>
                         </div>
                     </div>
 
@@ -799,42 +951,59 @@
                         </div>
                         <div class="results-grid">
                             <div class="result-item">
-                                <div class="item-title">Cart Abandonment ↓ 23%</div>
-                                <div class="item-description">From 67% to 44% abandonment rate after fixing identified friction points</div>
+                                <div class="item-title">Cart Abandonment 
+↓ 23%</div>
+                                <div class="item-description">From 67% to 
+44% abandonment rate after fixing identified friction points</div>
                             </div>
                             <div class="result-item">
-                                <div class="item-title">Mobile Conversion ↑ 31%</div>
-                                <div class="item-description">Mobile now converts within 5% of desktop performance</div>
+                                <div class="item-title">Mobile Conversion 
+↑ 31%</div>
+                                <div class="item-description">Mobile now 
+converts within 5% of desktop performance</div>
                             </div>
                             <div class="result-item">
-                                <div class="item-title">Revenue Impact: +$2.3M</div>
-                                <div class="item-description">Annual revenue increase from improved checkout experience</div>
+                                <div class="item-title">Revenue Impact: 
++$2.3M</div>
+                                <div class="item-description">Annual 
+revenue increase from improved checkout experience</div>
                             </div>
                             <div class="result-item">
-                                <div class="item-title">Customer Satisfaction ↑ 28%</div>
-                                <div class="item-description">CSAT scores improved as checkout frustration decreased</div>
+                                <div class="item-title">Customer 
+Satisfaction ↑ 28%</div>
+                                <div class="item-description">CSAT scores 
+improved as checkout frustration decreased</div>
                             </div>
                             <div class="result-item">
-                                <div class="item-title">Support Tickets ↓ 35%</div>
-                                <div class="item-description">Fewer "I can't complete my order" support requests</div>
+                                <div class="item-title">Support Tickets ↓ 
+35%</div>
+                                <div class="item-description">Fewer "I 
+can't complete my order" support requests</div>
                             </div>
                             <div class="result-item">
-                                <div class="item-title">Time to Insight: 2 Days</div>
-                                <div class="item-description">vs 6+ weeks with traditional user research methods</div>
+                                <div class="item-title">Time to Insight: 2 
+Days</div>
+                                <div class="item-description">vs 6+ weeks 
+with traditional user research methods</div>
                             </div>
                         </div>
 
                         <div class="key-insight">
-                            <div class="insight-title">Key "SO WHAT" Insight</div>
-                            <div class="insight-text">The ability to see exactly what users experienced turned a $2.3M revenue problem into a $2.3M revenue opportunity - in just 2 days of investigation.</div>
+                            <div class="insight-title">Key "SO WHAT" 
+Insight</div>
+                            <div class="insight-text">The ability to see 
+exactly what users experienced turned a $2.3M revenue problem into a $2.3M 
+revenue opportunity - in just 2 days of investigation.</div>
                         </div>
                     </div>
                 </div>
 
 <div id="story2" class="story">
     <div class="story-header">
-        <div class="story-title">CloudFlow: Solving the 40% Feature Adoption Mystery</div>
-        <div class="story-subtitle">How product analytics revealed why users weren't adopting a key feature despite high interest</div>
+        <div class="story-title">CloudFlow: Solving the 40% Feature 
+Adoption Mystery</div>
+        <div class="story-subtitle">How product analytics revealed why 
+users weren't adopting a key feature despite high interest</div>
         <div class="company-info">
             <div class="info-item">
                 <div class="info-icon-company">☁️</div>
@@ -859,15 +1028,22 @@
         <div class="challenge-grid">
             <div class="challenge-item">
                 <div class="item-title">Low Feature Adoption (40%)</div>
-                <div class="item-description">Despite user surveys showing 80% interest in the new automation feature, only 40% of users actually used it within 30 days of launch.</div>
+                <div class="item-description">Despite user surveys showing 
+80% interest in the new automation feature, only 40% of users actually 
+used it within 30 days of launch.</div>
             </div>
             <div class="challenge-item">
-                <div class="item-title">Development Investment at Risk</div>
-                <div class="item-description">6 months and $400K in development costs were at risk if the feature couldn't drive user engagement and retention.</div>
+                <div class="item-title">Development Investment at 
+Risk</div>
+                <div class="item-description">6 months and $400K in 
+development costs were at risk if the feature couldn't drive user 
+engagement and retention.</div>
             </div>
             <div class="challenge-item">
                 <div class="item-title">Churn Risk for Key Accounts</div>
-                <div class="item-description">Enterprise customers specifically requested this feature - low adoption could impact <span class="metric-highlight">$3.2M in at-risk ARR</span>.</div>
+                <div class="item-description">Enterprise customers 
+specifically requested this feature - low adoption could impact <span 
+class="metric-highlight">$3.2M in at-risk ARR</span>.</div>
             </div>
         </div>
     </div>
@@ -880,21 +1056,30 @@
         <div class="solution-grid">
             <div class="solution-item">
                 <div class="item-title">Discovery vs. Activation Gap</div>
-                <div class="item-description">Session replay showed users found the feature easily, but 60% would click around for 2-3 minutes then abandon without completing setup.</div>
+                <div class="item-description">Session replay showed users 
+found the feature easily, but 60% would click around for 2-3 minutes then 
+abandon without completing setup.</div>
             </div>
             <div class="solution-item">
-                <div class="item-title">Cognitive Overload in Onboarding</div>
-                <div class="item-description">Users were overwhelmed by a 7-step setup process. Session replay revealed users would start, get confused at step 4, and never return.</div>
+                <div class="item-title">Cognitive Overload in 
+Onboarding</div>
+                <div class="item-description">Users were overwhelmed by a 
+7-step setup process. Session replay revealed users would start, get 
+confused at step 4, and never return.</div>
             </div>
             <div class="solution-item">
                 <div class="item-title">Value Not Immediately Clear</div>
-                <div class="item-description">Heatmaps showed users spent most time reading help text instead of taking action - indicating the value proposition wasn't clear.</div>
+                <div class="item-description">Heatmaps showed users spent 
+most time reading help text instead of taking action - indicating the 
+value proposition wasn't clear.</div>
             </div>
         </div>
 
         <div class="key-insight">
             <div class="insight-title">Key "WHY" Insight</div>
-            <div class="insight-text">Users wanted the feature but couldn't successfully complete the initial setup. The gap between interest and activation was a UX problem, not a product-market fit problem.</div>
+            <div class="insight-text">Users wanted the feature but 
+couldn't successfully complete the initial setup. The gap between interest 
+and activation was a UX problem, not a product-market fit problem.</div>
         </div>
     </div>
 
@@ -906,41 +1091,52 @@
         <div class="results-grid">
             <div class="result-item">
                 <div class="item-title">Feature Adoption ↑ 85%</div>
-                <div class="item-description">From 40% to 74% adoption rate after streamlining onboarding</div>
+                <div class="item-description">From 40% to 74% adoption 
+rate after streamlining onboarding</div>
             </div>
             <div class="result-item">
                 <div class="item-title">Time to Value ↓ 60%</div>
-                <div class="item-description">Average setup time reduced from 12 minutes to 4.5 minutes</div>
+                <div class="item-description">Average setup time reduced 
+from 12 minutes to 4.5 minutes</div>
             </div>
             <div class="result-item">
                 <div class="item-title">User Retention ↑ 22%</div>
-                <div class="item-description">Users who adopted the feature showed 22% higher 90-day retention</div>
+                <div class="item-description">Users who adopted the 
+feature showed 22% higher 90-day retention</div>
             </div>
             <div class="result-item">
                 <div class="item-title">Support Tickets ↓ 45%</div>
-                <div class="item-description">Fewer "How do I set up..." support requests</div>
+                <div class="item-description">Fewer "How do I set up..." 
+support requests</div>
             </div>
             <div class="result-item">
                 <div class="item-title">Revenue Impact: +$1.8M</div>
-                <div class="item-description">Higher feature adoption led to reduced churn and upsells</div>
+                <div class="item-description">Higher feature adoption led 
+to reduced churn and upsells</div>
             </div>
             <div class="result-item">
                 <div class="item-title">Product Confidence ↑</div>
-                <div class="item-description">Data-driven insights for future feature development</div>
+                <div class="item-description">Data-driven insights for 
+future feature development</div>
             </div>
         </div>
 
         <div class="key-insight">
             <div class="insight-title">Key "SO WHAT" Insight</div>
-            <div class="insight-text">Understanding the "why" behind user behavior transformed a failing feature launch into a growth driver, protecting $3.2M in at-risk revenue and generating $1.8M in additional value.</div>
+            <div class="insight-text">Understanding the "why" behind user 
+behavior transformed a failing feature launch into a growth driver, 
+protecting $3.2M in at-risk revenue and generating $1.8M in additional 
+value.</div>
         </div>
     </div>
 </div>
 
 <div id="story3" class="story">
     <div class="story-header">
-        <div class="story-title">SecureBank: The $5M Mobile Banking Conversion Crisis</div>
-        <div class="story-subtitle">How session replay uncovered security friction that was costing millions in digital adoption</div>
+        <div class="story-title">SecureBank: The $5M Mobile Banking 
+Conversion Crisis</div>
+        <div class="story-subtitle">How session replay uncovered security 
+friction that was costing millions in digital adoption</div>
         <div class="company-info">
             <div class="info-item">
                 <div class="info-icon-company">🏦</div>
@@ -965,15 +1161,22 @@
         <div class="challenge-grid">
             <div class="challenge-item">
                 <div class="item-title">Low Mobile Banking Adoption</div>
-                <div class="item-description">Only 35% of customers were using mobile banking despite heavy marketing investment and industry benchmarks of 60%+.</div>
+                <div class="item-description">Only 35% of customers were 
+using mobile banking despite heavy marketing investment and industry 
+benchmarks of 60%+.</div>
             </div>
             <div class="challenge-item">
                 <div class="item-title">High Branch Dependency Costs</div>
-                <div class="item-description">Each in-branch transaction cost $4.25 vs $0.24 for mobile. Low digital adoption was costing <span class="metric-highlight">$5M annually</span> in operational expenses.</div>
+                <div class="item-description">Each in-branch transaction 
+cost $4.25 vs $0.24 for mobile. Low digital adoption was costing <span 
+class="metric-highlight">$5M annually</span> in operational 
+expenses.</div>
             </div>
             <div class="challenge-item">
                 <div class="item-title">Competitive Disadvantage</div>
-                <div class="item-description">Younger customers were choosing competitors with better digital experiences, threatening long-term growth.</div>
+                <div class="item-description">Younger customers were 
+choosing competitors with better digital experiences, threatening 
+long-term growth.</div>
             </div>
         </div>
     </div>
@@ -985,22 +1188,33 @@
         </div>
         <div class="solution-grid">
             <div class="solution-item">
-                <div class="item-title">Multi-Factor Authentication Abandonment</div>
-                <div class="item-description">Session replay revealed 40% of users abandoned registration during the MFA setup process, especially when SMS codes were delayed or failed.</div>
+                <div class="item-title">Multi-Factor Authentication 
+Abandonment</div>
+                <div class="item-description">Session replay revealed 40% 
+of users abandoned registration during the MFA setup process, especially 
+when SMS codes were delayed or failed.</div>
             </div>
             <div class="solution-item">
-                <div class="item-title">Password Complexity Confusion</div>
-                <div class="item-description">Users were creating passwords that met technical requirements but kept failing validation due to unclear error messaging about special characters.</div>
+                <div class="item-title">Password Complexity 
+Confusion</div>
+                <div class="item-description">Users were creating 
+passwords that met technical requirements but kept failing validation due 
+to unclear error messaging about special characters.</div>
             </div>
             <div class="solution-item">
                 <div class="item-title">Session Timeout Frustration</div>
-                <div class="item-description">Aggressive 3-minute session timeouts caused users to lose progress mid-transaction, leading to abandonment and support calls.</div>
+                <div class="item-description">Aggressive 3-minute session 
+timeouts caused users to lose progress mid-transaction, leading to 
+abandonment and support calls.</div>
             </div>
         </div>
 
         <div class="key-insight">
             <div class="insight-title">Key "WHY" Insight</div>
-            <div class="insight-text">Security measures designed to protect customers were actually preventing them from becoming digital users. The "secure by default" approach was creating more friction than fraud prevention value.</div>
+            <div class="insight-text">Security measures designed to 
+protect customers were actually preventing them from becoming digital 
+users. The "secure by default" approach was creating more friction than 
+fraud prevention value.</div>
         </div>
     </div>
 
@@ -1012,33 +1226,44 @@
         <div class="results-grid">
             <div class="result-item">
                 <div class="item-title">Mobile Adoption ↑ 71%</div>
-                <div class="item-description">From 35% to 60% mobile banking adoption in 6 months</div>
+                <div class="item-description">From 35% to 60% mobile 
+banking adoption in 6 months</div>
             </div>
             <div class="result-item">
-                <div class="item-title">Registration Completion ↑ 89%</div>
-                <div class="item-description">Streamlined MFA process increased successful registrations</div>
+                <div class="item-title">Registration Completion ↑ 
+89%</div>
+                <div class="item-description">Streamlined MFA process 
+increased successful registrations</div>
             </div>
             <div class="result-item">
                 <div class="item-title">Operational Savings: $3.2M</div>
-                <div class="item-description">Reduced branch transaction volume through digital adoption</div>
+                <div class="item-description">Reduced branch transaction 
+volume through digital adoption</div>
             </div>
             <div class="result-item">
                 <div class="item-title">Customer Satisfaction ↑ 34%</div>
-                <div class="item-description">Digital experience NPS improved from 6 to 8.1</div>
+                <div class="item-description">Digital experience NPS 
+improved from 6 to 8.1</div>
             </div>
             <div class="result-item">
-                <div class="item-title">Support Call Reduction ↓ 28%</div>
-                <div class="item-description">Fewer "I can't log in" and "How do I..." calls</div>
+                <div class="item-title">Support Call Reduction ↓ 
+28%</div>
+                <div class="item-description">Fewer "I can't log in" and 
+"How do I..." calls</div>
             </div>
             <div class="result-item">
                 <div class="item-title">Fraud Rate Maintained</div>
-                <div class="item-description">Security improvements maintained fraud prevention while improving UX</div>
+                <div class="item-description">Security improvements 
+maintained fraud prevention while improving UX</div>
             </div>
         </div>
 
         <div class="key-insight">
             <div class="insight-title">Key "SO WHAT" Insight</div>
-            <div class="insight-text">Understanding why customers weren't adopting digital banking allowed the team to optimize security without compromising user experience, saving $3.2M annually while positioning the bank competitively for digital-first customers.</div>
+            <div class="insight-text">Understanding why customers weren't 
+adopting digital banking allowed the team to optimize security without 
+compromising user experience, saving $3.2M annually while positioning the 
+bank competitively for digital-first customers.</div>
         </div>
     </div>
 </div>
@@ -1316,7 +1541,8 @@
             ],
             metrics: [
                 { name: "Conversion Rate", formula: "(Sales / Visitors) × 100" },
-                { name: "Return Rate", formula: "(Returns / Sales) × 100" },
+                { name: "Return Rate", formula: "(Returns / Sales) × 100" 
+},
                 { name: "Customer Retention Rate", formula: "((End Customers - New Customers) / Start Customers) × 100" }
             ],
             benefits: [
@@ -1442,19 +1668,16 @@
                 "Click-Through Rate", "Table Turnover Rate", "Video Completion Rate"
             ],
             benefitsKeywords: [
-                "optimize", "enhance", "improve", "technical", "workflow", "performance",
-                "checkout flow", "barriers", "product availability", "ordering experience"
+                "optimize", "enhance", "improve", "technical", "workflow", 
+"performance",
+                "checkout flow", "barriers", "product availability", 
+"ordering experience"
             ]
         },
         "sales": {
             highlightClass: "highlight-sales",
             terminologyKeywords: [
-                "Conversion Funnel", "Revenue Per Visitor", "Market Share Growth", 
-                "Cross-Selling Opportunities", "Sales Conversion", "Shopping Cart Conversion", 
-                "Purchase Intent", "Average Order Value", "Customer Lifetime Value",
-                "Brand Loyalty", "Customer Retention", "Order Frequency", "Repeat Purchases",
-                "Flash Sales", "Seasonal Sales", "Bulk Ordering", "Subscriber Growth",
-                "Subscription Rate", "Course Retention"
+                "Conversion Funnel", "Revenue Per Visitor", "Market Share Growth", "Cross-Selling Opportunities", "Sales Conversion", "Shopping Cart Conversion", "Purchase Intent", "Average Order Value", "Customer Lifetime Value","Brand Loyalty", "Customer Retention", "Order Frequency", "Repeat Purchases", "Flash Sales", "Seasonal Sales", "Bulk Ordering", "Subscriber Growth", "Subscription Rate", "Course Retention"
             ],
             metricsKeywords: [
                 "Conversion Rate", "Average Order Value", "Customer Lifetime Value",
@@ -1472,13 +1695,12 @@
                 "Bounce Rate", "Content Personalization", "Audience Engagement", 
                 "Customer Segmentation", "Brand Loyalty", "Social Sharing", 
                 "Click-Through Rate", "Conversion Rate", "Product Discovery",
-                "Flash Sales", "Seasonal Trends", "Seasonal Sales", "Customer Feedback",
+                "Flash Sales", "Seasonal Trends", "Seasonal Sales", "Customer Feedback", 
                 "Market Share Growth", "Purchase Behavior", "Purchase Intent",
                 "Beauty Trends", "Content Consumption", "Audience Retention"
             ],
             metricsKeywords: [
-                "Conversion Rate", "Bounce Rate", "Click-Through Rate", "Cart Abandonment Rate",
-                "Audience Retention Rate", "Churn Rate", "Net Promoter Score",
+                "Conversion Rate", "Bounce Rate", "Click-Through Rate", "Cart Abandonment Rate", "Audience Retention Rate", "Churn Rate", "Net Promoter Score",
                 "Customer Satisfaction Score", "Average Order Value"
             ],
             benefitsKeywords: [
@@ -1530,18 +1752,13 @@
             terminologyKeywords: [
                 "Conversion Rate", "Customer Lifetime Value", "Market Share Growth", 
                 "Revenue Per Visitor", "Customer Retention Rate", "Average Order Value", 
-                "Net Promoter Score", "Customer Satisfaction", "Brand Loyalty",
-                "Shopping Cart Conversion", "Table Turnover Rate", "Order Completion Rate",
-                "Subscriber Growth", "Audience Retention", "Course Completion Rate"
+                "Net Promoter Score", "Customer Satisfaction", "Brand Loyalty", "Shopping Cart Conversion", "Table Turnover Rate", "Order Completion Rate", "Subscriber Growth", "Audience Retention", "Course Completion Rate"
             ],
             metricsKeywords: [
-                "Conversion Rate", "Customer Lifetime Value", "Customer Retention Rate",
-                "Net Promoter Score", "Average Order Value", "Churn Rate",
-                "Customer Satisfaction Score", "Order Completion Rate", "Course Completion Rate"
+                "Conversion Rate", "Customer Lifetime Value", "Customer Retention Rate","Net Promoter Score", "Average Order Value", "Churn Rate", "Customer Satisfaction Score", "Order Completion Rate", "Course Completion Rate"
             ],
             benefitsKeywords: [
-                "increase", "enhance", "optimize", "growth", "customer loyalty", "revenue",
-                "high-value customers", "performance", "satisfaction", "engagement"
+                "increase", "enhance", "optimize", "growth", "customer loyalty", "revenue","high-value customers", "performance", "satisfaction", "engagement"
             ]
         }
     };
@@ -1608,7 +1825,7 @@
 
     // Function to filter content based on selected industry
     function filterContent() {
-        const selectedIndustry = document.getElementById('industrySelect').value;
+        const selectedIndustry = document.getElementById('industryDropdown').querySelector('.custom-dropdown-select').getAttribute('data-value');
         
         if (selectedIndustry === "") {
             // Hide all sections if no industry is selected
@@ -1755,8 +1972,8 @@
     
     // Update the applyPersonaHighlights function to use this new helper
     function applyPersonaHighlights() {
-        const selectedPersona = document.getElementById('personaSelect').value;
-        const selectedIndustry = document.getElementById('industrySelect').value;
+        const selectedPersona = document.getElementById('personaDropdown').querySelector('.custom-dropdown-select').getAttribute('data-value');
+        const selectedIndustry = document.getElementById('industryDropdown').querySelector('.custom-dropdown-select').getAttribute('data-value');
         
         // If no industry selected, return
         if (!selectedIndustry) return;
@@ -1819,9 +2036,7 @@
             // Try to find any term that has info for this persona
             let fallbackTerm = data.terminology.find(term => 
                 personaReasons[term] && 
-                (personaReasons[term].toLowerCase().includes(selectedPersona) || 
-                personaInterests[selectedPersona].terminologyKeywords.includes(term))
-            ) || data.terminology[0]; // Fallback to first term if none match
+                (personaReasons[term].toLowerCase().includes(selectedPersona) || personaInterests[selectedPersona].terminologyKeywords.includes(term))) || data.terminology[0]; // Fallback to first term if none match
             
             const listItem = document.querySelector(`#terminologyList li[data-term="${fallbackTerm}"]`);
             if (listItem) {
@@ -1881,9 +2096,10 @@
             // Try to find any metric that has info for this persona
             let fallbackMetric = data.metrics.find(metric => 
                 personaReasons[metric.name] && 
-                (personaReasons[metric.name].toLowerCase().includes(selectedPersona) || 
-                personaInterests[selectedPersona].metricsKeywords.includes(metric.name))
-            ) || data.metrics[0]; // Fallback to first metric if none match
+                
+(personaReasons[metric.name].toLowerCase().includes(selectedPersona) || 
+                
+personaInterests[selectedPersona].metricsKeywords.includes(metric.name))) || data.metrics[0]; // Fallback to first metric if none match
             
             const row = document.getElementById('metricsTable').rows[data.metrics.indexOf(fallbackMetric)];
             if (row && row.cells[0]) {
@@ -1909,8 +2125,7 @@
         // Apply highlights to benefits
         data.benefits.forEach((benefit, index) => {
             // Check if any keyword is in the benefit text
-            const shouldHighlight = interests.benefitsKeywords.some(keyword => 
-                benefit.toLowerCase().includes(keyword.toLowerCase()));
+            const shouldHighlight = interests.benefitsKeywords.some(keyword => benefit.toLowerCase().includes(keyword.toLowerCase()));
             
             if (shouldHighlight) {
                 const listItem = document.getElementById('benefitsList').children[index];
@@ -1967,15 +2182,15 @@
 
     // Initialize the page
     document.addEventListener('DOMContentLoaded', function() {
-        // Set up event listeners
-        document.getElementById('industrySelect').addEventListener('change', filterContent);
-        document.getElementById('personaSelect').addEventListener('change', applyPersonaHighlights);
-        
         // Create tooltip container for reuse
         const tooltip = document.createElement('div');
         tooltip.id = 'globalTooltip';
         tooltip.className = 'tooltip';
         document.body.appendChild(tooltip);
+
+        // Initialize custom dropdowns
+        setupCustomDropdown('industryDropdown', filterContent);
+        setupCustomDropdown('personaDropdown', applyPersonaHighlights);
     });
 
     // Helper functions
@@ -2027,6 +2242,54 @@
         if (event.target == modal) {
             modal.style.display = "none";
         }
+    }
+
+    // --- Custom Dropdown Logic ---
+    function setupCustomDropdown(dropdownId, onChangeCallback) {
+        const dropdown = document.getElementById(dropdownId);
+        const selectDisplay = dropdown.querySelector('.custom-dropdown-select');
+        const optionsContainer = dropdown.querySelector('.custom-dropdown-options');
+        const options = optionsContainer.querySelectorAll('.custom-dropdown-option');
+
+        // Toggle dropdown visibility
+        selectDisplay.addEventListener('click', () => {
+            optionsContainer.classList.toggle('open');
+            selectDisplay.classList.toggle('open');
+        });
+
+        // Handle option selection
+        options.forEach(option => {
+            option.addEventListener('click', () => {
+                const newValue = option.getAttribute('data-value');
+                const newText = option.textContent;
+
+                // Update the displayed value
+                selectDisplay.textContent = newText;
+                selectDisplay.setAttribute('data-value', newValue);
+
+                // Close the dropdown
+                optionsContainer.classList.remove('open');
+                selectDisplay.classList.remove('open');
+
+                // Remove 'selected' class from all options
+                options.forEach(opt => opt.classList.remove('selected'));
+                // Add 'selected' class to the clicked option
+                option.classList.add('selected');
+
+                // Trigger the original change callback
+                if (onChangeCallback) {
+                    onChangeCallback();
+                }
+            });
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', (event) => {
+            if (!dropdown.contains(event.target)) {
+                optionsContainer.classList.remove('open');
+                selectDisplay.classList.remove('open');
+            }
+        });
     }
 </script>
 </body>
